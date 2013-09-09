@@ -24,6 +24,7 @@ class PymonSender(Sender):
     def send(self, client):
         for server in client.servers:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((server.address, server.port))
             s.send(client.msg.getMessageString())
             s.close()
 

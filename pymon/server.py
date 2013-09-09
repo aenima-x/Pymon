@@ -17,7 +17,7 @@ class Server(object):
         """
         if address:
             self.address = address
-        self.__port = port
+        self.port = port
 
     def __repr__(self):
         return u"Server: %s(%s)" % (self.address, self.port)
