@@ -18,12 +18,12 @@ class Client(object):
         self.__analyzeEnvironment(native)
         self.msg = Message(column=column)
         if log:
-            self.logFilePath = os.path.join(self.clientLogsPath, self.msg.column, ".log")
-            self.logFile = open(self.logFilePath)
+            self.logFilePath = os.path.join(self.clientLogsPath, self.msg.column + ".log")
+            self.logFile = open(self.logFilePath, "a")
         else:
             self.logFile = None
         if tmp:
-            self.tmpFilePath = os.path.join(self.tmpPath, self.msg.column, ".tmp")
+            self.tmpFilePath = os.path.join(self.tmpPath, self.msg.column + ".tmp")
             self.tmpFile = open(self.tmpFilePath, "w")
         else:
             self.tmpFile = None
