@@ -12,7 +12,7 @@ import pymon
 
 def main():
     c = pymon.Client()
-    # Do you logic...
+    # Do your logic...
     c.msg.column = "test"
     c.msg.text = "test message"
     c.msg.color = c.msg.RED_COLOR
@@ -38,7 +38,7 @@ import os
     os.environ['SERVEROSTYPE']='Darwin'
     os.environ['XYMONCLIENTHOME']='/home/xymon'
     c = pymon.Client()
-    # Do you logic...
+    # Do yourr logic...
     c.msg.column = "test"
     c.msg.text = "test message"
     c.msg.color = c.msg.RED_COLOR
