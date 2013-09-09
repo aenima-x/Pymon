@@ -42,5 +42,6 @@ class NativeSender(Sender):
         for server in client.servers:
             commandDict = {'binary': self.binary, 'server': server.getURL(), 'fullMessage': client.msg.getMessageString()}
             command = '%(binary)s %(server)s "%(fullMessage)s"' % commandDict
-            os.system(command)
+            print(command)
+            #os.system(command)
 

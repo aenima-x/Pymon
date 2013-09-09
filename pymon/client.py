@@ -31,8 +31,8 @@ class Message(object):
 
     def getMessageString(self):
         date = datetime.now().strftime('%c')
-        return '"%s%s %s.%s %s %s\n%s\n"' % (self.type, self.duration, self.machine, self.column, self.color,
-                                             date, self.text)
+        return '%s%s %s.%s %s %s\n%s\n' % (self.type, self.duration, self.machine, self.column, self.color,
+                                           date, self.text)
 
     def __repr__(self):
         return "Message %s.%s %s" % (self.machine, self.column, self.color)
