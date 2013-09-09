@@ -2,7 +2,17 @@
 Pymon: Python module for Xymon(hobbit) external scripts
 =======================================================
 
-TODO
+Pymon it's a module to write xymon(Hobbit) external scripts and send it to a xymon server.
+It uses the xymon binary to send the information. But it also works in a native mode if you don't have the xymon client installed.
+Its very easy to use, because it read most of the information needed from the xymon environment variables.
+
+Installation
+========
+```
+git clone https://github.com/aenima-x/Pymon.git
+cd Pymon
+python setup.py install
+```
 
 Examples
 ========
@@ -15,6 +25,7 @@ def main():
     # Do your logic...
     c.logFile.write("write some log\n")
     c.tmpFile.write("write some temp stuff\n")
+    c.msg.color = c.msg.GREEN_COLOR
     c.msg.text = "test message"
     c.send()
 
