@@ -11,11 +11,11 @@ class Client(object):
     Abstraction of a xymon client.
     """
 
-    def __init__(self, column, log=True, tmp=True, logMode="a", tmpMode="w", native=True):
+    def __init__(self, column, log=True, tmp=True, logMode="a", tmpMode="w", useXymon=True):
         """
         Constructor of the Xymon Client.
         """
-        self.__analyzeEnvironment(native)
+        self.__analyzeEnvironment(useXymon)
         self.msg = Message(column=column)
         if log:
             self.logFilePath = os.path.join(self.clientLogsPath, self.msg.column + ".log")
@@ -48,14 +48,14 @@ class Client(object):
         if not self.servers:
             raise ClientMissingInfoError('XYMSERVER(S)')
 
-    def __analyzeEnvironment(self, native):
+    def __analyzeEnvironment(self, useXymon):
         """
         Look for Xymon Environment variables to know if it's running in a xymon environment or stand alone.
         If it's running in a xymon environment, gets the information from the variables.
         Then creates the sender (native or pymon own sender)
         """
         self.__loadServers()
-        if native:
+        if useXymon:
             xymonBinary = utils.getVariableContent('XYMON')
             if not xymonBinary:
                 raise ClientMissingInfoError("XYMON")
