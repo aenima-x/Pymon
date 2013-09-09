@@ -9,7 +9,7 @@ class Sender(object):
     def __init__(self):
         super(Sender, self).__init__()
 
-    def send(self, client, server):
+    def send(self, client):
         raise NotImplementedError
 
 
@@ -18,7 +18,7 @@ class PymonSender(Sender):
         super(PymonSender, self).__init__()
         pass
 
-    def __repr__(self, client, server):
+    def __repr__(self):
         return u"PymonSender"
 
     def send(self, client):
