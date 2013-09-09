@@ -77,7 +77,7 @@ class PymonClientTests(unittest.TestCase):
         #self.assertEqual(client.sender.send(), "kenny")
 
     def test_native_client_one_server(self):
-        os.environ['XYMSRV'] = '192.168.1.1'
+        os.environ['XYMSRV'] = '127.0.0.1'
         os.environ['XYMSERVERS'] = ''
         os.environ['XYMONDPORT'] = '1984'
         os.environ['XYMONCLIENTLOGS'] = '/var/log/xymon'

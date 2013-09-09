@@ -34,6 +34,14 @@ class Message(object):
         return '"%s%s %s.%s %s %s\n%s\n"' % (self.type, self.duration, self.machine, self.column, self.color,
                                              date, self.text)
 
+    def __repr__(self):
+        return "Message %s.%s %s" % (self.machine, self.column, self.color)
+
+    def validate(self):
+        assert self.machine
+        assert self.column
+        assert self.color
+
 
 class Client(object):
     """
@@ -100,6 +108,7 @@ class Client(object):
         self.xymonClientHome = utils.getVariableContent('XYMONCLIENTHOME')
 
     def send(self):
+        self.msg.validate()
         self.sender.send(self)
 
 
