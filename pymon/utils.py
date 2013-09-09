@@ -17,7 +17,7 @@ def ipAddressIsValid(ipAddress):
         return False
     else:
         octets = ipAddress.split('.')
-        f = lambda x: 256 > int(x) > 0
+        f = lambda x: 256 > int(x) >= 0
         validOctets = filter(f, octets)
         return len(octets) == len(validOctets)
 
