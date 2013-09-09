@@ -1,5 +1,6 @@
-from pymon.utils import ipAddressIsValid, hostnameIsValid
-from pymon.pymonExceptions import InvalidAddressError, InvalidPortError
+# -*- coding: utf-8 -*-
+from utils import ipAddressIsValid, hostnameIsValid
+from pymonExceptions import InvalidAddressError, InvalidPortError
 
 
 class Server(object):

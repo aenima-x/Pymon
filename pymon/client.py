@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pymon
 import os
-from pymon import utils
-from pymon import sender
+import utils
+import sender
 from datetime import datetime
 
 
@@ -11,7 +11,7 @@ class Client(object):
     Abstraction of a xymon client.
     """
 
-    def __init__(self, column, log=True, tmp=True, native=True):
+    def __init__(self, column, log=True, tmp=True, logMode="a", tmpMode="w", native=True):
         """
         Constructor of the Xymon Client.
         """
@@ -19,12 +19,12 @@ class Client(object):
         self.msg = Message(column=column)
         if log:
             self.logFilePath = os.path.join(self.clientLogsPath, self.msg.column + ".log")
-            self.logFile = open(self.logFilePath, "a")
+            self.logFile = open(self.logFilePath, logMode)
         else:
             self.logFile = None
         if tmp:
             self.tmpFilePath = os.path.join(self.tmpPath, self.msg.column + ".tmp")
-            self.tmpFile = open(self.tmpFilePath, "w")
+            self.tmpFile = open(self.tmpFilePath, tmpMode)
         else:
             self.tmpFile = None
 

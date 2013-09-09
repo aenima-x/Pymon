@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
-from pymon import utils
-from pymon.pymonExceptions import InvalidPath
+import socket
+import utils
+from pymonExceptions import InvalidPath
 
 
 class Sender(object):
@@ -20,9 +21,11 @@ class PymonSender(Sender):
     def __repr__(self, client, server):
         return u"PymonSender"
 
-    def send(self, client, server):
-        #TODO: Pymon sender
-        raise NotImplementedError
+    def send(self, client):
+        for server in client.servers:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.send(client.msg.getMessageString())
+            s.close()
 
 
 class NativeSender(Sender):
