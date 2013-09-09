@@ -50,18 +50,18 @@ class Client(object):
     def __repr__(self):
         return u'Pymon [%s](%s)' % (self.servers, self.sender)
 
-    def __readServers(self):
+    def __loadServers(self):
         self.servers = []
         xymonPort = utils.getVariableContent('XYMONDPORT')
         if not xymonPort:
             xymonPort = 1984
-        xymonServer = utils.getVariableContent('XYMSRV')
-        if xymonServer and len(xymonServer) > 0:
-            self.servers.append(pymon.Server(address=xymonServer, port=xymonPort))  # Use one primary server
+        primaryServer = utils.getVariableContent('XYMSRV')
+        if primaryServer and primaryServer != '0.0.0.0':
+            self.servers.append(pymon.Server(address=primaryServer, port=xymonPort))  # Use one primary server
         else:
-            xymonServers = utils.getVariableContent('XYMSERVERS')
-            if xymonServers:
-                for i in filter(None, xymonServers.split(' ')):
+            multipleServers = utils.getVariableContent('XYMSERVERS')
+            if multipleServers:
+                for i in filter(None, multipleServers.split(' ')):
                     if i != '0.0.0.0':
                         self.servers.append(pymon.Server(address=i, port=xymonPort))
         if not self.servers:
@@ -73,7 +73,7 @@ class Client(object):
         If it's running in a xymon environment, gets the information from the variables.
         Then creates the sender (native or pymon own sender)
         """
-        self.__readServers()
+        self.__loadServers()
         if native:
             xymonBinary = utils.getVariableContent('XYMON')
             if not xymonBinary:

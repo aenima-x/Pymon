@@ -1,6 +1,7 @@
 from pymon.utils import ipAddressIsValid, hostnameIsValid
 from pymon.pymonExceptions import InvalidAddressError, InvalidPortError
 
+
 class Server(object):
     """
     Xymon server Class
@@ -51,10 +52,11 @@ class Server(object):
         if ipAddressIsValid(address) or hostnameIsValid(address):
             return address.lower()
         else:
+            print(address)
             raise InvalidAddressError(address)
 
     def getURL(self):
         if not self.address or not self.port:
-            raise InvalidAddressError
+            raise InvalidAddressError(None)
         else:
             return "%s:%s" % (self.address, self.port)

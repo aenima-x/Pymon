@@ -76,7 +76,31 @@ class PymonClientTests(unittest.TestCase):
         #client.sender = MockSender(client)
         #self.assertEqual(client.sender.send(), "kenny")
 
+    def test_native_client_one_server(self):
+        os.environ['XYMSRV'] = '192.168.1.1'
+        os.environ['XYMSERVERS'] = ''
+        os.environ['XYMONDPORT'] = '1984'
+        os.environ['XYMONCLIENTLOGS'] = '/var/log/xymon'
+        os.environ['XYMONTMP'] = '/tmp/xymon'
+        os.environ['XYMON'] = '/bin/ls'
+        os.environ['MACHINE'] = 'kenny'
+        os.environ['SERVEROSTYPE'] = 'Darwin'
+        os.environ['XYMONCLIENTHOME'] = '/home/xymon'
+        client = pymon.Client()
+        self.assertIsInstance(client, pymon.Client)
 
+    def test_native_client_two_servers(self):
+        os.environ['XYMSRV'] = '0.0.0.0'
+        os.environ['XYMSERVERS'] = '192.168.1.1 192.168.1.2'
+        os.environ['XYMONDPORT'] = '1984'
+        os.environ['XYMONCLIENTLOGS'] = '/var/log/xymon'
+        os.environ['XYMONTMP'] = '/tmp/xymon'
+        os.environ['XYMON'] = '/bin/ls'
+        os.environ['MACHINE'] = 'kenny'
+        os.environ['SERVEROSTYPE'] = 'Darwin'
+        os.environ['XYMONCLIENTHOME'] = '/home/xymon'
+        client = pymon.Client()
+        self.assertIsInstance(client, pymon.Client)
 def main():
     unittest.main()
 
