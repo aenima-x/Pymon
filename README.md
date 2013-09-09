@@ -11,11 +11,11 @@ Using clientlaunch to write xymon variables
 import pymon
 
 def main():
-    c = pymon.Client()
+    c = pymon.Client("column_name")
     # Do your logic...
-    c.msg.column = "test"
+    c.logFile.write("write some log\n")
+    c.tmpFile.write("write some temp stuff\n")
     c.msg.text = "test message"
-    c.msg.color = c.msg.RED_COLOR
     c.send()
 
 if __name__ == "__main__":
@@ -31,15 +31,16 @@ import os
     os.environ['XYMSRV']='192.168.1.1'
     os.environ['XYMSERVERS']=''
     os.environ['XYMONDPORT']='1984'
-    os.environ['XYMONCLIENTLOGS']='/var/log/xymon'
+    os.environ['XYMONCLIENTLOGS']='/home/xymon/client/logs'
     os.environ['XYMONTMP']='/home/xymon/client/tmp/'
     os.environ['XYMON']='/home/xymon/client/bin/xymon'
     os.environ['MACHINE']='kenny'
     os.environ['SERVEROSTYPE']='Darwin'
     os.environ['XYMONCLIENTHOME']='/home/xymon'
-    c = pymon.Client()
-    # Do yourr logic...
-    c.msg.column = "test"
+    c = pymon.Client("column_name")
+    # Do your logic...
+    c.logFile.write("write some log\n")
+    c.tmpFile.write("write some temp stuff\n")
     c.msg.text = "test message"
     c.msg.color = c.msg.RED_COLOR
     c.send()
