@@ -6,7 +6,7 @@ Pymon it's a module to write xymon(Hobbit) external scripts and send it to a xym
 It uses the xymon binary to send the information. But it also works in a native mode if you don't have the xymon client installed.
 Its very easy to use, because it read most of the information needed from the xymon environment variables.
 
-It creates a log file and a tmp file if you need them in you script (see examples).
+It creates a log file and a tmp file if you need them in your script (see examples).
 
 
 Installation

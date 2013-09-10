@@ -6,6 +6,9 @@ from pymonExceptions import InvalidPath
 
 
 class Sender(object):
+    """
+    Sender Base class.
+    """
     def __init__(self):
         super(Sender, self).__init__()
 
@@ -14,6 +17,9 @@ class Sender(object):
 
 
 class PymonSender(Sender):
+    """
+    The native pymon sender.
+    """
     def __init__(self):
         super(PymonSender, self).__init__()
         pass
@@ -29,9 +35,16 @@ class PymonSender(Sender):
             s.close()
 
 
-class NativeSender(Sender):
+class XymonSender(Sender):
+    """
+    Xymon sender. This will use the xymon binary.
+    """
     def __init__(self, binary=None):
-        super(NativeSender, self).__init__()
+        """
+        Constructor.
+        :param binary: str
+        """
+        super(XymonSender, self).__init__()
         if not binary:
             self.binary = utils.getVariableContent('XYMON')
         else:
@@ -40,9 +53,13 @@ class NativeSender(Sender):
             raise InvalidPath(self.binary)
 
     def __repr__(self):
-        return u"NativeSender (%s)" % self.binary
+        return u"XymonSender (%s)" % self.binary
 
     def send(self, client):
+        """
+        Executes the xymon binary to send the message to all tge servers in the client.
+        :param client: Client
+        """
         for server in client.servers:
             commandDict = {'binary': self.binary, 'server': server.getURL(), 'fullMessage': client.msg.getMessageString()}
             command = '%(binary)s %(server)s "%(fullMessage)s"' % commandDict

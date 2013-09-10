@@ -5,15 +5,13 @@ from pymonExceptions import InvalidAddressError, InvalidPortError
 
 class Server(object):
     """
-    Xymon server Class
+    Xymon server Class.
     """
     def __init__(self, address=None, port=1984):
         """
         Constructor.
-
-        Keyword arguments:
-        address -- Server IP address or Hostname (default None)
-        port -- Server port number (default 1984)
+        :param address: str
+        :param port: int
         """
         if address:
             self.address = address
@@ -30,8 +28,7 @@ class Server(object):
     def address(self, address):
         """
         Sets Server IP or Hostname.
-        Arguments:
-        address -- IP or Hostname
+        :param address: str
         """
         self.__address = self.__validateAddress(address)
 
@@ -48,15 +45,19 @@ class Server(object):
 
     def __validateAddress(self, address):
         """
-        Validate the address given, the address could be an IP (X.X.X.X) or a hostname (foo.com)
+        Validate the address given, the address could be an IP (X.X.X.X) or a hostname (foo.com).
+        :param address: str
         """
         if ipAddressIsValid(address) or hostnameIsValid(address):
             return address.lower()
         else:
-            print(address)
             raise InvalidAddressError(address)
 
     def getURL(self):
+        """
+        Return the url (host:port) of the server.
+        :rtype : str
+        """
         if not self.address or not self.port:
             raise InvalidAddressError(None)
         else:

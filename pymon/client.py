@@ -14,6 +14,12 @@ class Client(object):
     def __init__(self, column, log=True, tmp=True, logMode="a", tmpMode="w", useXymon=True):
         """
         Constructor of the Xymon Client.
+        :param column: str
+        :param log: bool
+        :param tmp: bool
+        :param logMode: str
+        :param tmpMode: str
+        :param useXymon: bool
         """
         self.__analyzeEnvironment(useXymon)
         self.msg = Message(column=column)
@@ -32,6 +38,9 @@ class Client(object):
         return u'Pymon [%s](%s)' % (self.servers, self.sender)
 
     def __loadServers(self):
+        """
+        Read and create the Xymon server(s) from the environment varibales.
+        """
         self.servers = []
         xymonPort = utils.getVariableContent('XYMONDPORT')
         if not xymonPort:
@@ -52,7 +61,8 @@ class Client(object):
         """
         Look for Xymon Environment variables to know if it's running in a xymon environment or stand alone.
         If it's running in a xymon environment, gets the information from the variables.
-        Then creates the sender (native or pymon own sender)
+        Then creates the sender (xymon or native)
+        :param useXymon: bool
         """
         self.__loadServers()
         if useXymon:
@@ -60,7 +70,7 @@ class Client(object):
             if not xymonBinary:
                 raise ClientMissingInfoError("XYMON")
             else:
-                self.sender = sender.NativeSender(xymonBinary)
+                self.sender = sender.XymonSender(xymonBinary)
         else:
             self.sender = sender.PymonSender()
         tmpPath = utils.getVariableContent('XYMONTMP')
@@ -81,6 +91,9 @@ class Client(object):
         self.xymonClientHome = utils.getVariableContent('XYMONCLIENTHOME')
 
     def send(self):
+        """
+        Send the current message to all the servers.
+        """
         self.msg.validate()
         if self.logFile:
             self.logFile.close()
@@ -90,14 +103,27 @@ class Client(object):
 
 
 class Message(object):
+    """
+    The Message class
+    """
     GREEN_COLOR = 'green'
     RED_COLOR = 'red'
     YELLOW_COLOR = 'yellow'
     WHITE_COLOR = 'white'
 
-    def __init__(self, text="", type="status", duration="", machine=None, column=None, color=GREEN_COLOR):
+    def __init__(self, text="", msgType="status", duration="", machine=None, column=None, color=GREEN_COLOR):
+        """
+        Constructor.
+
+        :param text: str
+        :param msgType: str
+        :param duration: str
+        :param machine: str
+        :param column: str
+        :param color: str
+        """
         self.text = text
-        self.type = type
+        self.msgType = msgType
         self.duration = duration
         self.column = column
         self.color = color
@@ -114,14 +140,20 @@ class Message(object):
             self.machine = machine
 
     def getMessageString(self):
+        """
+        Return the message string to send to xymon.
+        """
         date = datetime.now().strftime('%c')
-        return '%s%s %s.%s %s %s\n%s\n' % (self.type, self.duration, self.machine, self.column, self.color,
+        return '%s%s %s.%s %s %s\n%s\n' % (self.msgType, self.duration, self.machine, self.column, self.color,
                                            date, self.text)
 
     def __repr__(self):
         return "Message %s.%s %s" % (self.machine, self.column, self.color)
 
     def validate(self):
+        """
+        Check if all the content is set.
+        """
         assert self.machine
         assert self.column
         assert self.color
@@ -129,4 +161,5 @@ class Message(object):
 
 class ClientMissingInfoError(BaseException):
     def __init__(self, missingInfo):
+        super(ClientMissingInfoError, self).__init__()
         self.message = u"Missing %s information" % missingInfo
