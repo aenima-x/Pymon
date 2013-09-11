@@ -27,7 +27,10 @@ def main():
     c = pymon.Client("column_name")
     # Do your logic...
     c.logFile.write("write some log\n")
-    c.tmpFile.write("write some temp stuff\n")
+    #If you need to create some tmp file, it wil create one for you
+    some_file = c.getTempFile("some_file_name")
+    some_file.write("some temp stuff/n")
+    some_file.close()
     c.msg.color = c.msg.GREEN_COLOR
     c.msg.text = "test message"
     c.send()
@@ -53,7 +56,10 @@ def main():
     c = pymon.Client("column_name")
     # Do your logic...
     c.logFile.write("write some log\n")
-    c.tmpFile.write("write some temp stuff\n")
+    #If you need to create some tmp file, it wil create one for you
+    some_file = c.getTempFile("some_file_name")
+    some_file.write("some temp stuff/n")
+    some_file.close()
     c.msg.text = "test message"
     c.msg.color = c.msg.RED_COLOR
     c.send()
@@ -78,7 +84,10 @@ def main():
     os.environ['MACHINE']='ubuntu'
     c = pymon.Client("column_name", useXymon=False)
     c.logFile.write("write some log\n")
-    c.tmpFile.write("write some temp stuff\n")
+    #If you need to create some tmp file, it wil create one for you
+    some_file = c.getTempFile("some_file_name")
+    some_file.write("some temp stuff/n")
+    some_file.close()
     c.msg.text = "python message"
     c.send()
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
+import pymon
 import utils
 import sender
-import pymon
 from message import Message
 from pymonExceptions import ClientMissingInfoError
 
@@ -12,14 +12,12 @@ class Client(object):
     Abstraction of a xymon client.
     """
 
-    def __init__(self, column, log=True, tmp=True, logMode="a", tmpMode="w", useXymon=True):
+    def __init__(self, column, log=True, logMode="a", useXymon=True):
         """
         Constructor of the Xymon Client.
         :param column: str
         :param log: bool
-        :param tmp: bool
         :param logMode: str
-        :param tmpMode: str
         :param useXymon: bool
         """
         self.__analyzeEnvironment(useXymon)
@@ -29,11 +27,6 @@ class Client(object):
             self.logFile = open(self.logFilePath, logMode)
         else:
             self.logFile = None
-        if tmp:
-            self.tmpFilePath = os.path.join(self.tmpPath, self.msg.column + ".tmp")
-            self.tmpFile = open(self.tmpFilePath, tmpMode)
-        else:
-            self.tmpFile = None
 
     def __repr__(self):
         return u'Pymon [%s](%s)' % (self.servers, self.sender)
@@ -91,6 +84,17 @@ class Client(object):
             self.osType = osType
         self.xymonClientHome = utils.getVariableContent('XYMONCLIENTHOME')
 
+    def getTempFile(self, filename, mode="w"):
+        """
+        If you have set a path for temporary files, it will create one.
+        :param filename: str
+        :param mode: str
+        """
+        if self.tmpPath:
+            return open(os.path.join(self.tmpPath, filename), mode)
+        else:
+            return None
+
     def send(self):
         """
         Send the current message to all the servers.
@@ -98,6 +102,4 @@ class Client(object):
         self.msg.validate()
         if self.logFile:
             self.logFile.close()
-        if self.tmpFile:
-            self.tmpFile.close()
         self.sender.send(self)

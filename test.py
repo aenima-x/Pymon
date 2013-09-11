@@ -2,8 +2,7 @@ import unittest
 import os
 import pymon
 from pymon import sender
-from pymon.pymonExceptions import InvalidAddressError, InvalidPortError, InvalidPath
-from pymon.client import ClientMissingInfoError
+from pymon.pymonExceptions import InvalidAddressError, InvalidPortError, InvalidPath, ClientMissingInfoError
 
 
 class MockSender(sender.Sender):
