@@ -12,7 +12,7 @@ class Sender(object):
     def __init__(self):
         super(Sender, self).__init__()
 
-    def send(self, client):
+    def send(self, client, debug=False):
         raise NotImplementedError
 
 
@@ -27,7 +27,7 @@ class PymonSender(Sender):
     def __repr__(self):
         return u"PymonSender"
 
-    def send(self, client):
+    def send(self, client, debug=False):
         for server in client.servers:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((server.address, server.port))
@@ -55,7 +55,7 @@ class XymonSender(Sender):
     def __repr__(self):
         return u"XymonSender (%s)" % self.binary
 
-    def send(self, client):
+    def send(self, client, debug=False):
         """
         Executes the xymon binary to send the message to all tge servers in the client.
         :param client: Client
@@ -63,5 +63,7 @@ class XymonSender(Sender):
         for server in client.servers:
             commandDict = {'binary': self.binary, 'server': server.getURL(), 'fullMessage': client.msg.getMessageString()}
             command = '%(binary)s %(server)s "%(fullMessage)s"' % commandDict
+            if debug:
+                print(command)
             os.system(command)
 
