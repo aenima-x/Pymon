@@ -12,16 +12,18 @@ class Client(object):
     Abstraction of a xymon client.
     """
 
-    def __init__(self, column, log=True, logMode="a", useXymon=True):
+    def __init__(self, column, log=True, logMode="a", useXymon=True, debug=False):
         """
         Constructor of the Xymon Client.
         :param column: str
         :param log: bool
         :param logMode: str
         :param useXymon: bool
+        :param debug: bool
         """
         self.__analyzeEnvironment(useXymon)
         self.msg = Message(column=column)
+        self.debug = debug
         if log:
             self.logFilePath = os.path.join(self.clientLogsPath, self.msg.column + ".log")
             self.logFile = open(self.logFilePath, logMode)
@@ -102,4 +104,4 @@ class Client(object):
         self.msg.validate()
         if self.logFile:
             self.logFile.close()
-        self.sender.send(self)
+        self.sender.send(self, self.debug)
