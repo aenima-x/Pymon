@@ -101,6 +101,18 @@ class PymonClientTests(unittest.TestCase):
         client = pymon.Client("column")
         self.assertIsInstance(client, pymon.Client)
 
+    def test_native_client_one_server_hobbit(self):
+        os.environ['BB'] = '127.0.0.1'
+        os.environ['BBDISPLAYS'] = ''
+        os.environ['BBPORT'] = '1984'
+        os.environ['BBCLIENTLOGS'] = '/tmp/'
+        os.environ['BBTMP'] = '/tmp/'
+        os.environ['BB'] = '/bin/ls'
+        os.environ['MACHINE'] = 'kenny'
+        os.environ['SERVEROSTYPE'] = 'Darwin'
+        os.environ['HOBBITCLIENTHOME'] = '/home/xymon'
+        client = pymon.Client("column")
+        self.assertIsInstance(client, pymon.Client)
 
 def main():
     unittest.main()
