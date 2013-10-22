@@ -38,14 +38,14 @@ class Client(object):
         Read and create the Xymon server(s) from the environment varibales.
         """
         self.servers = []
-        xymonPort = utils.getVariableContent('XYMONDPORT')
+        xymonPort = utils.getVariableContent(['XYMONDPORT', 'BBPORT'])
         if not xymonPort:
             xymonPort = 1984
-        primaryServer = utils.getVariableContent('XYMSRV')
+        primaryServer = utils.getVariableContent(['XYMSRV', 'BBDISP'])
         if primaryServer and primaryServer != '0.0.0.0':
             self.servers.append(pymon.Server(address=primaryServer, port=xymonPort))  # Use one primary server
         else:
-            multipleServers = utils.getVariableContent('XYMSERVERS')
+            multipleServers = utils.getVariableContent(['XYMSERVERS','BBDISPLAYS'])
             if multipleServers:
                 for i in filter(None, multipleServers.split(' ')):
                     if i != '0.0.0.0':
@@ -62,19 +62,19 @@ class Client(object):
         """
         self.__loadServers()
         if useXymon:
-            xymonBinary = utils.getVariableContent('XYMON')
+            xymonBinary = utils.getVariableContent(['XYMON', 'BB'])
             if not xymonBinary:
                 raise ClientMissingInfoError("XYMON")
             else:
                 self.sender = sender.XymonSender(xymonBinary)
         else:
             self.sender = sender.PymonSender()
-        tmpPath = utils.getVariableContent('XYMONTMP')
+        tmpPath = utils.getVariableContent(['XYMONTMP', 'BBTMP'])
         if not tmpPath:
             raise ClientMissingInfoError('XYMONTMP')
         else:
             self.tmpPath = tmpPath
-        clientLogsPath = utils.getVariableContent('XYMONCLIENTLOGS')
+        clientLogsPath = utils.getVariableContent(['XYMONCLIENTLOGS', 'BBCLIENTLOGS'])
         if not clientLogsPath:
             raise ClientMissingInfoError('XYMONCLIENTLOGS')
         else:
@@ -84,7 +84,7 @@ class Client(object):
             self.osType = None
         else:
             self.osType = osType
-        self.xymonClientHome = utils.getVariableContent('XYMONCLIENTHOME')
+        self.xymonClientHome = utils.getVariableContent(['XYMONCLIENTHOME', 'HOBBITCLIENTHOME'])
 
     def getTempFile(self, filename, mode="w"):
         """
