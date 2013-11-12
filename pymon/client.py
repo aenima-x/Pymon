@@ -24,6 +24,7 @@ class Client(object):
         self.__analyzeEnvironment(useXymon)
         self.msg = Message(column=column)
         self.debug = debug
+        self.sender = None
         if log:
             self.logFilePath = os.path.join(self.clientLogsPath, self.msg.column + ".log")
             self.logFile = open(self.logFilePath, logMode)

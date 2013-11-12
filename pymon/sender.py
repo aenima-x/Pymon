@@ -46,11 +46,9 @@ class XymonSender(Sender):
         """
         super(XymonSender, self).__init__()
         if not binary:
-            self.binary = utils.getVariableContent('XYMON')
+            self.binary = utils.getVariableContent(['XYMON', 'BB'])
         else:
             self.binary = binary
-        if not os.path.isfile(self.binary):
-            raise InvalidPath(self.binary)
 
     def __repr__(self):
         return u"XymonSender (%s)" % self.binary
@@ -60,6 +58,8 @@ class XymonSender(Sender):
         Executes the xymon binary to send the message to all tge servers in the client.
         :param client: Client
         """
+        if not os.path.isfile(self.binary):
+            raise InvalidPath(self.binary)
         for server in client.servers:
             commandDict = {'binary': self.binary, 'server': server.getURL(), 'fullMessage': client.msg.getMessageString()}
             command = '%(binary)s %(server)s "%(fullMessage)s"' % commandDict
