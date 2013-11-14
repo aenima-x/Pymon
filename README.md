@@ -44,15 +44,15 @@ Load variables by hand (for run scripts in cron)
 import pymon
 import os
 def main():
-    os.environ['XYMSRV']='127.0.0.1'
-    os.environ['XYMSERVERS']=''
-    os.environ['XYMONDPORT']='1984'
-    os.environ['XYMONCLIENTLOGS']='/home/xymon/client/logs'
-    os.environ['XYMONTMP']='/home/xymon/client/tmp/'
-    os.environ['XYMON']='/home/xymon/client/bin/xymon'
-    os.environ['MACHINE']='ubuntu'
-    os.environ['SERVEROSTYPE']='linux'
-    os.environ['XYMONCLIENTHOME']='/home/xymon'
+    os.environ['XYMSRV'] = '127.0.0.1'
+    os.environ['XYMSERVERS'] = ''
+    os.environ['XYMONDPORT'] = '1984'
+    os.environ['XYMONCLIENTLOGS'] = '/home/xymon/client/logs'
+    os.environ['XYMONTMP'] = '/home/xymon/client/tmp/'
+    os.environ['XYMON'] = '/home/xymon/client/bin/xymon'
+    os.environ['MACHINE'] = 'ubuntu'
+    os.environ['SERVEROSTYPE'] = 'linux'
+    os.environ['XYMONCLIENTHOME'] = '/home/xymon'
     c = pymon.Client("column_name")
     # Do your logic...
     c.logFile.write("write some log\n")
@@ -76,12 +76,12 @@ In this mode, you don't need all the variables. Just some of them.
 import pymon
 import os
 def main():
-    os.environ['XYMSRV']='127.0.0.1'
-    os.environ['XYMSERVERS']=''
-    os.environ['XYMONDPORT']='1984'
-    os.environ['XYMONCLIENTLOGS']='/tmp'
-    os.environ['XYMONTMP']='/tmp'
-    os.environ['MACHINE']='ubuntu'
+    os.environ['XYMSRV'] = '127.0.0.1'
+    os.environ['XYMSERVERS'] = ''
+    os.environ['XYMONDPORT'] = '1984'
+    os.environ['XYMONCLIENTLOGS'] = '/tmp'
+    os.environ['XYMONTMP'] = '/tmp'
+    os.environ['MACHINE'] = 'ubuntu'
     c = pymon.Client("column_name", useXymon=False)
     c.logFile.write("write some log\n")
     #If you need to create some tmp file, it wil create one for you
