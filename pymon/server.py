@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from utils import ipAddressIsValid, hostnameIsValid
+from utils import ip_address_is_valid, hostname_is_valid
 from pymonExceptions import InvalidAddressError, InvalidPortError
 
 
@@ -22,7 +22,7 @@ class Server(object):
 
     @property
     def address(self):
-        return self.__address
+        return self._address
 
     @address.setter
     def address(self, address):
@@ -30,30 +30,30 @@ class Server(object):
         Sets Server IP or Hostname.
         :param address: str
         """
-        self.__address = self.__validateAddress(address)
+        self._address = self._validate_address(address)
 
     @property
     def port(self):
-        return self.__port
+        return self._port
 
     @port.setter
     def port(self, port):
         try:
-            self.__port = int(port)
+            self._port = int(port)
         except ValueError:
             raise InvalidPortError(port)
 
-    def __validateAddress(self, address):
+    def _validate_address(self, address):
         """
         Validate the address given, the address could be an IP (X.X.X.X) or a hostname (foo.com).
         :param address: str
         """
-        if ipAddressIsValid(address) or hostnameIsValid(address):
+        if ip_address_is_valid(address) or hostname_is_valid(address):
             return address.lower()
         else:
             raise InvalidAddressError(address)
 
-    def getURL(self):
+    def get_URL(self):
         """
         Return the url (host:port) of the server.
         :rtype : str

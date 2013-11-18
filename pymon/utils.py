@@ -9,7 +9,7 @@ ipv4regex = re.compile(ipv4pattern)
 hostnameRegex = re.compile(hostnamePattern)
 
 
-def ipAddressIsValid(ipAddress):
+def ip_address_is_valid(ipAddress):
     """
     Validates IP Address.
     """
@@ -22,14 +22,14 @@ def ipAddressIsValid(ipAddress):
         return len(octets) == len(validOctets)
 
 
-def hostnameIsValid(address):
+def hostname_is_valid(address):
     """
     Validate a hostname
     """
     return bool(hostnameRegex.match(address))
 
 
-def getVariableContent(variableNames):
+def get_variable_content(variable_names):
         """
         Look if the variable is set and get its content.
         For backward compatibility with Hobbit, it can receive a list or variable names to find the same information.
@@ -37,18 +37,18 @@ def getVariableContent(variableNames):
         Arguments:
         variableNames -- Name or names for the variables to find
         """
-        if isinstance(variableNames, list):
+        if isinstance(variable_names, list):
             response = None
-            for variableName in variableNames:
+            for variableName in variable_names:
                 response = os.environ.get(variableName)
                 if response:
                     break
             return response
         else:
-            return os.environ.get(variableNames)
+            return os.environ.get(variable_names)
 
 
-def getCommandOutput(command):
+def get_command_output(command):
     assert isinstance(command, str)
     output = subprocess.check_output(command.split()).strip('\n')
     return output

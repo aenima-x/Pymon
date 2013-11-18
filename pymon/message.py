@@ -33,7 +33,7 @@ class Message(object):
 
     def __get_machine(self, machine):
         if not machine:
-            env_machine = utils.getVariableContent('MACHINE')
+            env_machine = utils.get_variable_content('MACHINE')
             if not env_machine:
                 raise ClientMissingInfoError("MACHINE")
             else:
@@ -41,7 +41,7 @@ class Message(object):
         else:
             self.machine = machine
 
-    def getMessageString(self):
+    def get_message_string(self):
         """
         Return the message string to send to xymon.
         """

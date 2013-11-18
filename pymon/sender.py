@@ -22,7 +22,6 @@ class PymonSender(Sender):
     """
     def __init__(self):
         super(PymonSender, self).__init__()
-        pass
 
     def __repr__(self):
         return u"PymonSender"
@@ -31,7 +30,7 @@ class PymonSender(Sender):
         for server in client.servers:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((server.address, server.port))
-            s.send(client.msg.getMessageString())
+            s.send(client.msg.get_message_string())
             s.close()
 
 
@@ -46,7 +45,7 @@ class XymonSender(Sender):
         """
         super(XymonSender, self).__init__()
         if not binary:
-            self.binary = utils.getVariableContent(['XYMON', 'BB'])
+            self.binary = utils.get_variable_content(['XYMON', 'BB'])
         else:
             self.binary = binary
 
@@ -61,7 +60,7 @@ class XymonSender(Sender):
         if not os.path.isfile(self.binary):
             raise InvalidPath(self.binary)
         for server in client.servers:
-            commandDict = {'binary': self.binary, 'server': server.getURL(), 'fullMessage': client.msg.getMessageString()}
+            commandDict = {'binary': self.binary, 'server': server.get_URL(), 'fullMessage': client.msg.get_message_string()}
             command = '%(binary)s %(server)s "%(fullMessage)s"' % commandDict
             if debug:
                 print(command)
