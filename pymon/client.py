@@ -26,10 +26,10 @@ class Client(object):
         self.debug = debug
         self.sender = None
         if log:
-            self.logFilePath = os.path.join(self.client_logs_path, self.msg.column + ".log")
-            self.logFile = open(self.logFilePath, log_write_mode)
+            self.log_file_path = os.path.join(self.client_logs_path, self.msg.column + ".log")
+            self.log_file = open(self.log_file_path, log_write_mode)
         else:
-            self.logFile = None
+            self.log_file = None
 
     def __repr__(self):
         return u'Pymon [%s](%s)' % (self.servers, self.sender)
@@ -80,11 +80,11 @@ class Client(object):
             raise ClientMissingInfoError('XYMONCLIENTLOGS')
         else:
             self.client_logs_path = client_logs_path
-        osType = utils.get_variable_content('SERVEROSTYPE')
-        if not osType:
-            self.osType = None
+        os_type = utils.get_variable_content('SERVEROSTYPE')
+        if not os_type:
+            self.os_type = None
         else:
-            self.osType = osType
+            self.os_type = os_type
         self.xymon_client_home = utils.get_variable_content(['XYMONCLIENTHOME', 'HOBBITCLIENTHOME'])
 
     def get_temp_file(self, filename, mode="w"):
@@ -103,6 +103,6 @@ class Client(object):
         Send the current message to all the servers.
         """
         self.msg.validate()
-        if self.logFile:
-            self.logFile.close()
+        if self.log_file:
+            self.log_file.close()
         self.sender.send(self, self.debug)

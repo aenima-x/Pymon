@@ -13,21 +13,25 @@ class Message(object):
     YELLOW_COLOR = 'yellow'
     WHITE_COLOR = 'white'
 
-    def __init__(self, text="", msgType="status", duration="", machine=None, column=None, color=GREEN_COLOR):
+    def __init__(self, text="", message_type="status", duration="", machine=None, column=None, color=GREEN_COLOR):
         """
         Constructor.
 
         :param text: str
-        :param msgType: str
+        :param message_type: str
         :param duration: str
         :param machine: str
         :param column: str
         :param color: str
         """
         self.text = text
-        self.msgType = msgType
+        self.message_type = message_type
         self.duration = duration
-        self.column = column
+        if column:
+            if " " in column:
+                raise ValueError("Invalid Column Name")
+            else:
+                self.column = column
         self.color = color
         self.__get_machine(machine)
 
@@ -46,7 +50,7 @@ class Message(object):
         Return the message string to send to xymon.
         """
         date = datetime.now().strftime('%c')
-        return '%s%s %s.%s %s %s\n%s\n' % (self.msgType, self.duration, self.machine, self.column, self.color,
+        return '%s%s %s.%s %s %s\n%s\n' % (self.message_type, self.duration, self.machine, self.column, self.color,
                                            date, self.text)
 
     def __repr__(self):
