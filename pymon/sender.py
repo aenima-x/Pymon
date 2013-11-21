@@ -54,8 +54,10 @@ class XymonSender(Sender):
 
     def send(self, client, debug=False):
         """
-        Executes the xymon binary to send the message to all tge servers in the client.
-        :param client: Client
+        Executes the xymon binary to send the message to all the servers in the client.
+        @param client: Client
+        @param debug: bool
+        @raise InvalidPath:
         """
         if not os.path.isfile(self.binary):
             raise InvalidPath(self.binary)
