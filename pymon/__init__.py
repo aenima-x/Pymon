@@ -1,7 +1,7 @@
 from server import Server
 from client import Client
 
-__author__ = 'Nicolas Rebagliati (nicolas.rebaglaiti@aenima-x.com.ar)'
+__author__ = 'Nicolas Rebagliati (nicolas.rebagliati@aenima-x.com.ar)'
 VERSION = (1, 0, 0, 'final', 0)
 
 
