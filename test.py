@@ -2,14 +2,14 @@ import unittest
 import os
 import pymon
 from pymon import sender
-from pymon.pymonExceptions import InvalidAddressError, InvalidPortError, ClientMissingInfoError
+from pymon.pymonExceptions import ClientMissingInfoError
 
 
 class MockSender(sender.Sender):
     def __init__(self):
         super(MockSender, self).__init__()
 
-    def send(self, client):
+    def send(self, client, debug=False):
         return client.machine
 
 
@@ -17,17 +17,17 @@ class PymonServerTests(unittest.TestCase):
 
     def test_server_ip_invalid(self):
         s = pymon.Server()
-        with self.assertRaises(InvalidAddressError):
+        with self.assertRaises(ValueError):
             s.address = '256.4.2.1'
 
     def test_server_hostname_invalid(self):
         s = pymon.Server()
-        with self.assertRaises(InvalidAddressError):
+        with self.assertRaises(ValueError):
             s.address = 'aaa.'
 
     def test_server_port_invalid(self):
         s = pymon.Server()
-        with self.assertRaises(InvalidPortError):
+        with self.assertRaises(ValueError):
             s.port = 'aaa'
 
     def test_server(self):
