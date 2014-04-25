@@ -21,10 +21,10 @@ class Client(object):
         :param use_xymon: bool
         :param debug: bool
         """
+        self.debug = debug
         self.sender = None
         self._analyze_environment(use_xymon)
         self.msg = Message(column=column)
-        self.debug = debug
         if log:
             self.log_file_path = os.path.join(self.client_logs_path, self.msg.column + ".log")
             self.log_file = open(self.log_file_path, log_write_mode)
